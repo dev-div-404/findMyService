@@ -1,0 +1,8 @@
+.homepagebody{
+    display: flex;
+    height: 500px;
+    border: 1px solid white;
+    
+    background-color: rgb(103, 53, 53);
+    color: green;
+}
