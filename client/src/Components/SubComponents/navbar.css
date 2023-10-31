@@ -42,6 +42,7 @@
 .siteName:hover{
     color: green;
     cursor: pointer;
+    width: fit-content;
 }
 
 .navbarlogin{

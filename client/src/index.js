@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './Components/HomePage';
 import AboutPage from './Components/AboutPage';
 import ContactPage from './Components/ContactPage'
+import LogInPage from './Components/LogInPage';
 
 import {
   createBrowserRouter,
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/contact",
     element: <ContactPage />,
+  },
+  {
+    path: "/login",
+    element: <LogInPage />,
   }
   
 ]);

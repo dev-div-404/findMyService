@@ -27,7 +27,7 @@ const NavBar = () => {
 
        <div className='navbarloginContainer'>
             <div className='navbarlogin'>
-                <a href='##login##'>login</a>
+                <Link to = '/login'>login</Link>
             </div>
        </div>
 
