@@ -1,0 +1,23 @@
+.homepagebody-div{
+    border: 1px red solid;
+    height: 500px;
+    margin-top: 20px;
+}
+
+.footer-div{
+    border: white solid 1px;
+    height: 200px;
+    margin-top: 20px;
+}
+
+.aboutpagebody-container{
+    height: 300px;
+    border: 1px solid rebeccapurple;
+    margin-top: 20px;
+}
+
+.contactpagebody-container{
+    border: 1px solid rebeccapurple;
+    margin-top: 20px;
+    height: 300px;
+}

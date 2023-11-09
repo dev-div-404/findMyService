@@ -1,38 +1,207 @@
-.App {
-  text-align: center;
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar-div{
+  height: fit-content;
+  border: 1px solid white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar-main-div{
+  background-color: rgb(1, 1, 30);
+  width: 100%;
+  height: 40px;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar-options{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-elements{
+  /* margin-top: 9px; */
+}
+
+.navbar-detail-opt{
+  margin-left: 30px;
+  margin-right: 10px;
+}
+
+.navbar-detail-opt a{
+  color : white;
+  text-decoration: none;
+}
+
+.navbar-detail-opt a:hover{
+  color: rgb(22, 173, 22);
+}
+
+.navbar-detail-opt a:active{
+  color: rgb(153, 184, 153);
+}
+
+.navbar-login-container{
+  margin-left: auto;
+  display: flex;
+}
+
+.navbar-login-opt{
+  margin-left: 20px;
+}
+
+#site-name{
+  margin-left: -20px;
+  color: beige;
+}
+
+/* ##################################################### USER LOGIN PAGE ##################################################### */
+.user-login-page-container{
+  height: 500px;
+  margin-top: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.log-in-form-wrapper{
+  border: rgb(136, 101, 101) solid 1px;
+  height: 450px;
+  width:400px;
+  display: block;
+}
+
+.log-in-text{
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.log-in-form-container{
+  height: 300px;
+  width: 300px;
+  margin: auto;
+  margin-top: 10px;
+}
+
+.log-in-form{
+  width: 70%;
+  height: 100%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.log-in-form input{
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+
+.log-in-form button{
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  margin-top: 30px;
+  background-color: rgb(16, 112, 16);
   color: white;
+  border-radius: 5px;
+  border: 0.5px solid black;
 }
 
-.App-link {
-  color: #61dafb;
+.log-in-form button:hover{
+  background-color: rgb(10, 81, 10); 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.log-in-form button:active{
+  background-color: rgb(3, 96, 3);
+  color: black;
+}
+
+.not-have-ac{
+  font-size: 13px;
+}
+
+
+.not-have-ac a{
+  font-size: 16px;
+  color: rgb(26, 50, 184);
+  text-decoration: none;
+}
+
+
+/* ######################################## User Page ####################################### */
+
+.userpage-navbar-main-div{
+  height: 40px;
+  width: 95%;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  background-color: rgba(2, 2, 57, 0.532);
+}
+
+.userpage-navbar-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+.userpage-navbar-options{
+  display: flex;
+  justify-content: space-between;
+}
+
+.userpage-navbar-options div{
+  margin-right: 30px;
+}
+
+.userpage-navbar-user-options{
+  display: flex;
+  margin-right: 20px;
+}
+
+.userpage-navbar-user-options div{
+  margin-left: 20px;
+}
+
+.userpage-navbar-opt{
+  color: antiquewhite;
+}
+
+.userpage-navbar-opt:hover{
+  color: rgb(142, 216, 139);
+  cursor: pointer;
+}
+
+.userpage-navbar-opt:active{
+  color: rgb(11, 138, 7);
+}
+
+.active-opt{
+  color: green;
+  text-decoration: underline;
+  
+}
+
+#logoutbtn:hover{
+  color: rgb(173, 52, 52);
+}
+
+#logoutbtn:active{
+  color: rgb(121, 20, 20);
 }
