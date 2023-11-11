@@ -59,7 +59,7 @@ app.post('/usersignup', async (req, res)=>{
             console.log('trying to create user with same phone')
         }else{
             UserModel.create(req.body).then((result) =>{
-                console.log('user created')
+                console.log('one user created : '+req.body.name);
                 res.status(200).json({msg : 'one user created'});
             }).catch(err =>{
                 console.log(err);
@@ -82,12 +82,11 @@ app.post('/userlogin', async (req, res)=>{
         req.session.useremail = email;
         req.session.username = user.name;
         res.status(200).json({ msg : 'logged in'});
-        console.log('one user logged in');
+        console.log(user.name+' user logged in');
     }
 })
 
 app.get('/getuser', (req,res)=>{
-    console.log(req.session.username)
     if(req.session.username){
         res.status(200).json({loggedin : true, useremail : req.session.useremail, username : req.session.username});
     }else{
@@ -96,7 +95,7 @@ app.get('/getuser', (req,res)=>{
 })
 
 app.get('/userlogout', (req,res)=>{
-    console.log(req.session.username + 'logging out')
+    console.log(req.session.username + ' logging out')
     req.session.destroy();
     res.status(200).json({msg : 'logged out'})
 })

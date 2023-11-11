@@ -35,10 +35,6 @@ const UserPageNavbar = (props) => {
                 <div className='userpage-navbar-opt active-opt' name = 'dashboard' onClick={clickOptHandler}>
                     Dashboard
                 </div>
-
-                <div className='userpage-navbar-opt' name = 'postedjobs' onClick={clickOptHandler}>
-                    Posted jobs
-                </div>
             </div>
             <div className='userpage-navbar-user-options'>
                 <div className='userpage-navbar-opt' name = 'userprofile' onClick={clickOptHandler}>
