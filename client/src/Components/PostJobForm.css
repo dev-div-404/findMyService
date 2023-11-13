@@ -1,0 +1,58 @@
+/* src/components/PostJobForm.css */
+
+/* Style the container */
+#postJobContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  /* Style the form */
+  #postJobForm {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Style form labels */
+  .postJobLabel {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  /* Style form inputs */
+  .postJobInput {
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Style the checkbox */
+  #privacySettings {
+    margin-bottom: 15px;
+  }
+  
+  /* Style the submit button */
+  #postJobSubmitBtn {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Change button color on hover */
+  #postJobSubmitBtn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Add some spacing between form elements */
+  .postJobFormItem {
+    margin-bottom: 10px;
+  }
+  

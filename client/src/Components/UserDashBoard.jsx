@@ -4,6 +4,7 @@ import UserPostedJobs from './UserPostedJobs'
 const UserDashBoard = (props) => {
 
   const userEmail = props.email;
+  const username = props.userName;
 
   return (
     <div className='userpage-dashboard-main-div'>

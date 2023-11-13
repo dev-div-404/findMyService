@@ -276,3 +276,23 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(146, 199, 245);
   border: 1px solid rgb(7, 68, 31);
 }
+
+#post-new-job-main-div{
+  height: fit-content;
+  width: 100%;
+  border: 1px solid red;
+}
+
+#post-new-job-container{
+  height: 400px;
+  width: fit-content;
+  border: 1px solid rgb(202, 139, 139);
+  display: flex;
+  flex-direction: column;
+}
+
+#post-new-job-heading{
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}

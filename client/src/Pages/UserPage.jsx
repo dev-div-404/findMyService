@@ -36,7 +36,7 @@ const UserPage = () => {
       <div className='userpage-opt-div'>
         {
             opt === "dashboard" ? 
-                  <UserDashBoard email = {userEmail}/> : 
+                  <UserDashBoard email = {userEmail} username = {userName}/> : 
             opt === "userprofile" ?
                   <UserProfile /> :
             <div> can't load page </div>
