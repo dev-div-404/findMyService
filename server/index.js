@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 
 import connectDB from './db/connDB.js'
 import UserModel from './db/UserModel.js'
+import JobModel from './db/JobModel.js';
 
 
 
@@ -98,6 +99,21 @@ app.get('/userlogout', (req,res)=>{
     console.log(req.session.username + ' logging out')
     req.session.destroy();
     res.status(200).json({msg : 'logged out'})
+})
+
+app.post('/addnewjob', async (req, res)=>{
+    // console.log(req.body);
+    if(req.session.useremail){
+        await JobModel.create({
+            ...req.body,
+            active : true,
+            useremail : req.session.useremail
+        }).then((result) =>{
+            res.status(200).json({created : true});
+        }).catch(err => console.log(err));
+    }else{
+        res.status(200).json({created : false});
+    }
 })
 
 

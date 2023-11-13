@@ -213,7 +213,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .userpage-dashboard-main-div{
-  height: 100%;
+  height: 500px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -240,7 +240,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .user-posted-jobs-header{
   font-size: 20px;
-  height: 40px;
+  height: 7%;
   display: flex;
   flex-direction: row;
   background-color: rgb(1, 31, 31);
@@ -253,6 +253,11 @@ input[type=number]::-webkit-outer-spin-button {
   align-items: center;
   justify-content: center;
   padding-top: 8px;
+}
+
+#add-job-btn-01:hover{
+  background-color: rgb(4, 56, 4);
+  cursor: pointer;
 }
 
 .user-posted-jobs-header button{
@@ -280,19 +285,97 @@ input[type=number]::-webkit-outer-spin-button {
 #post-new-job-main-div{
   height: fit-content;
   width: 100%;
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#post-new-job-container{
-  height: 400px;
-  width: fit-content;
-  border: 1px solid rgb(202, 139, 139);
+#post-job-form-container{
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-job-form{
   display: flex;
   flex-direction: column;
+  width: 60%;
+  justify-content: center;
+  align-items: center;
 }
 
-#post-new-job-heading{
-  font-size: 2em;
-  font-weight: bold;
+.post-job-form *{
+  text-align: center;
+  height: 40px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: beige;
+}
+#add-job-form-title{
+  background-color: transparent;
+}
+
+.post-job-form textarea {
+  height: 50px;
+}
+
+.post-job-form button {
+  height: 30px;
+  width: 50%;
+  background-color: rgb(11, 223, 11);
+}
+
+.post-job-form button:hover{
+  cursor: pointer;
+  background-color: rgb(27, 147, 27);
   color: white;
 }
+
+.post-job-form button:active {
+  background-color: rgb(27, 147, 27);
+  color: rgb(7, 6, 6);
+}
+
+#add-job-cancel-btn{
+  background-color: rgb(186, 62, 62);
+}
+
+#add-job-cancel-btn:hover{
+  background-color: rgb(95, 10, 10);
+}
+
+#userpage-job-list{
+  background-color: rgb(0, 0, 0);
+  height: 100%;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  border: 2px rgb(3, 28, 3) solid;
+  border-radius: 10px;
+}
+
+.userpage-indivisual-task{
+  background-color: rgb(3, 64, 3);
+  margin-top: 5px;
+  min-height: 50px !important;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.userpage-indivisual-task:hover{
+  background-color: rgb(2, 48, 2);
+  cursor: pointer;
+}
+
+#userpage-joblist-container{
+  height: 90%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+

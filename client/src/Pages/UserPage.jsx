@@ -42,7 +42,6 @@ const UserPage = () => {
             <div> can't load page </div>
         }
       </div>
-        
         <Footer />
     </div>
   )

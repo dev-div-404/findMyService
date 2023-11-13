@@ -15,13 +15,36 @@ const UserPostedJobs = (props) => {
             <div className='user-posted-jobs-title-text'>
               These are posted jobs
             </div>
-            <button onClick={postNewJobHandler}>
+            <button onClick={postNewJobHandler} id='add-job-btn-01'>
               Post New Job
             </button>
         </div>
 
-        <div>
-          posted job lists
+        <div id='userpage-joblist-container'>
+          <div id='userpage-job-list'>
+              <div  className='userpage-indivisual-task'>
+                job 1
+              </div>
+              <div className='userpage-indivisual-task'>
+                job 2
+              </div><div  className='userpage-indivisual-task'>
+                job 1
+              </div>
+              <div className='userpage-indivisual-task'>
+                job 2
+              </div><div  className='userpage-indivisual-task'>
+                job 1
+              </div>
+              <div className='userpage-indivisual-task'>
+                job 2
+              </div><div  className='userpage-indivisual-task'>
+                job 1
+              </div>
+              <div className='userpage-indivisual-task'>
+                job 2
+              </div>
+
+          </div>
         </div>
     </div>
   )

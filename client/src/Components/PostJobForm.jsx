@@ -1,192 +1,132 @@
 // src/components/PostJobForm.js
-import React, { useState } from 'react';
-import './PostJobForm.css'; // Import the CSS file
+import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 const PostJobForm = () => {
-  const [formData, setFormData] = useState({
-    serviceType: '',
-    jobTitle: '',
-    jobDescription: '',
+
+  const navigate = useNavigate()
+  axios.userCredentials = true;
+
+  useEffect(() =>{
+      axios.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
+          if(!res.data.loggedin){
+            alert('session expired');
+            navigate('/userlogin');
+          }
+      }).catch(err => console.log(err));
+  },[navigate])
+
+  const [info, setInfo] = useState({
+    jobtype: 'plumber',
+    jobtitle: '',
+    jobdesc: '', // Fix the typo here
+    deadline: new Date().toISOString().split("T", 1)[0],
     location: '',
-    mediaUpload: null,
+    zip : '',
     budget: '',
-    deadline: '',
-    communicationMethod: '',
-    additionalPreferences: '',
-    privacySettings: false,
-    termsAndConditions: false,
+    phone: ''
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
-    }));
+  const onChangeHandler = (event) => {
+    setInfo({ ...info, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add code to send formData to your backend for processing
-    console.log('Form Data:', formData);
-    // Reset the form after submission if needed
-    // setFormData({ ...initialFormData });
-  };
+  const clearInfo = () =>{
+    setInfo({
+      jobtype: 'plumber',
+      jobtitle: '',
+      jobdesc: '', // Fix the typo here
+      deadline: new Date().toISOString().split("T", 1)[0],
+      location: '',
+      zip : '',
+      budget: '',
+      phone: ''
+    })
+  }
+
+  const clickButtonHandler = (event) =>{
+    event.preventDefault();
+    console.log(info);
+
+    axios.post(`${process.env.REACT_APP_SERVER_URI}/addnewjob`, info).then(res =>{
+        if(res.data.created){
+          alert('new job created');
+          navigate('/user');
+        }else{
+          alert('error creating job');
+        }
+    }).catch(err => console.log(err));
+
+    clearInfo();
+  }
+
+  const clickCancelButtonHandler = () =>{
+      navigate('/user')   
+  }
 
   return (
-    <div id="postJobContainer">
-      <h2>Post Job</h2>
-      <form id="postJobForm" onSubmit={handleSubmit}>
-        <label className="postJobLabel" htmlFor="serviceType">
-          Service Type:
-        </label>
-        <select
-          id="serviceType"
-          className="postJobInput"
-          name="serviceType"
-          value={formData.serviceType}
-          onChange={handleChange}
-          required
-        >
-          <option value="plumbing">Plumbing</option>
-          <option value="carpentry">Carpentry</option>
-          {/* Add more options as needed */}
-        </select>
-
-        <label className="postJobLabel" htmlFor="jobTitle">
-          Job Title:
-        </label>
-        <input
-          type="text"
-          id="jobTitle"
-          className="postJobInput"
-          name="jobTitle"
-          value={formData.jobTitle}
-          onChange={handleChange}
-          required
-        />
-
-        <label className="postJobLabel" htmlFor="jobDescription">
-          Job Description:
-        </label>
-        <textarea
-          id="jobDescription"
-          className="postJobInput"
-          name="jobDescription"
-          value={formData.jobDescription}
-          onChange={handleChange}
-          rows="4"
-          required
-        ></textarea>
-
-        <label className="postJobLabel" htmlFor="location">
-          Location:
-        </label>
-        <input
-          type="text"
-          id="location"
-          className="postJobInput"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-
-        <label className="postJobLabel" htmlFor="mediaUpload">
-          Media Upload:
-        </label>
-        <input
-          type="file"
-          id="mediaUpload"
-          className="postJobInput"
-          name="mediaUpload"
-          accept="image/*, video/*"
-          onChange={handleChange}
-        />
-
-        <label className="postJobLabel" htmlFor="budget">
-          Budget Range:
-        </label>
-        <input
-          type="text"
-          id="budget"
-          className="postJobInput"
-          name="budget"
-          value={formData.budget}
-          onChange={handleChange}
-          placeholder="Enter your budget"
-        />
-
-        <label className="postJobLabel" htmlFor="deadline">
-          Timeline/Deadline:
-        </label>
-        <input
-          type="date"
-          id="deadline"
-          className="postJobInput"
-          name="deadline"
-          value={formData.deadline}
-          onChange={handleChange}
-        />
-
-        <label className="postJobLabel" htmlFor="communicationMethod">
-          Preferred Communication Method:
-        </label>
-        <select
-          id="communicationMethod"
-          className="postJobInput"
-          name="communicationMethod"
-          value={formData.communicationMethod}
-          onChange={handleChange}
-        >
-          <option value="platform">Through Platform</option>
-          <option value="email">Email</option>
-          <option value="phone">Phone</option>
-        </select>
-
-        <label className="postJobLabel" htmlFor="additionalPreferences">
-          Additional Preferences:
-        </label>
-        <textarea
-          id="additionalPreferences"
-          className="postJobInput"
-          name="additionalPreferences"
-          value={formData.additionalPreferences}
-          onChange={handleChange}
-          rows="3"
-        ></textarea>
-
-        <label className="postJobLabel" htmlFor="privacySettings">
-          Privacy Settings:
-        </label>
-        <input
-          type="checkbox"
-          id="privacySettings"
-          className="postJobInput"
-          name="privacySettings"
-          checked={formData.privacySettings}
-          onChange={handleChange}
-        />
-        Make Public
-
-        <label className="postJobLabel" htmlFor="termsAndConditions">
-          Terms and Conditions:
-        </label>
-        <input
-          type="checkbox"
-          id="termsAndConditions"
-          className="postJobInput"
-          name="termsAndConditions"
-          checked={formData.termsAndConditions}
-          onChange={handleChange}
-          required
-        />
-        I agree to the terms and conditions
-
-        <button id="postJobSubmitBtn" type="submit">
-          Post Job
-        </button>
-      </form>
+    <div id='post-new-job-main-div'>
+      <div id='post-job-form-container'>
+        <form className="post-job-form">
+          <h2 id='add-job-form-title'>Post a Job</h2>
+          <select name='jobtype' value={info.jobtype} onChange={onChangeHandler}>
+            <option value={'plumber'}>Plumber</option>
+            <option value={'electrician'}>Electrician</option>
+            <option value={'acservice'}>AC Service</option>
+          </select>
+          <input
+            type='text'
+            placeholder='Job Title'
+            name='jobtitle'
+            value={info.jobtitle}
+            onChange={onChangeHandler}
+          />
+          <textarea
+            name='jobdesc' // Fix the typo here
+            placeholder='Job Description'
+            value={info.jobdesc}
+            onChange={onChangeHandler}
+          />
+          <input
+            type='date'
+            name='deadline'
+            value={info.deadline}
+            onChange={onChangeHandler}
+          />
+          <input
+            type='text'
+            placeholder='Location'
+            name='location'
+            value={info.location}
+            onChange={onChangeHandler}
+          />
+          <input
+            type='number'
+            placeholder='Zip Code'
+            name='zip'
+            value={info.zip}
+            onChange={onChangeHandler}
+          />
+          <input
+            type='number'
+            placeholder='Budget'
+            name='budget'
+            value={info.budget}
+            onChange={onChangeHandler}
+          />
+          <input
+            type='number'
+            placeholder='Contact Number'
+            name='phone'
+            value={info.phone}
+            onChange={onChangeHandler}
+          />
+          
+          <button onClick={clickButtonHandler}> Post Job </button>
+          <button onClick={clickCancelButtonHandler} id='add-job-cancel-btn'> Cancel</button>
+        </form>
+      </div>
     </div>
   );
 };
