@@ -9,6 +9,8 @@ import UserSignUpPage from './Pages/UserSignUpPage';
 import UserPage from './Pages/UserPage';
 import PostNewPage from './Pages/PostNewPage';
 import JobDetailsPage from './Pages/JobDetailsPage'
+import ProfLogInPage from './Pages/ProfLogInPage';
+import ProfSignUpPage from './Pages/ProfSignUpPage';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path='/user' element={<UserPage />}/>
           <Route path='/postjob' element={<PostNewPage />}/>
           <Route path="/user/jobs/:id" element={<JobDetailsPage />} />
+          <Route path="/proflogin" element={<ProfLogInPage />} />
+          <Route path="/profsignup" element={<ProfSignUpPage />} />
 
         </Routes>
       </BrowserRouter>

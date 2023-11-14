@@ -21,6 +21,10 @@ const JobSchema = mongoose.Schema({
         type :String,
         required: true
     },
+    postdate: {
+        type :String,
+        required: true
+    },
     location: {
         type :String,
         required: true

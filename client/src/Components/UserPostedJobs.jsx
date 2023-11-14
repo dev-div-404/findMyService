@@ -25,7 +25,6 @@ const UserPostedJobs = (props) => {
   }
 
   const redirectToJobPage = (jobid) =>{
-      console.log(jobid)
       navigate(`./jobs/${jobid}`)
   }
 
@@ -54,7 +53,7 @@ const UserPostedJobs = (props) => {
                                     {job.jobtitle}
                                  </div>
                                  <div className='job-date'>
-                                    {job.deadline}  
+                                    {job.postdate}  
                                  </div>
                                  <div className='job-status'>
                                   {

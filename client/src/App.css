@@ -416,3 +416,79 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(81, 81, 235);
   font-size: 20px;
 }
+
+#job-details-container{
+  height: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+#job-details-div{
+  height: 100%;
+  width: 50%;
+  background-color: rgb(2, 24, 2);
+}
+
+#job-details-notification-div{
+  height: 100%;
+  width: 50%;
+  background-color: rgb(2, 46, 2);
+}
+
+#job-details-title-div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(2, 33, 4);
+}
+
+#job-details-desc{
+  height: 100px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  margin-left: 50px;
+  border: 2px black solid;
+  background-color: rgb(107, 47, 47);
+  color: black;
+  padding: 10px;
+  color: rgb(17, 210, 165);
+  font-size: 20px;
+}
+
+.job-details-div{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.job-details-div div{
+  width: 60%;
+}
+
+#job-details-title-div h3{
+  width: 60% ;
+  text-align: center;
+}
+
+#job-details-title-div button{
+  background-color: rgb(209, 104, 104);
+  height: 30px;
+  width: 70px;
+  margin-right: 20px;
+}
+
+#job-details-title-div button:hover{
+  background-color: rgb(180, 14, 14);
+  cursor: pointer;
+  
+}
+
+#close-text{
+  font-size: 20px;
+  color: rgb(120, 228, 120);
+  padding-right: 20px;
+}
