@@ -116,6 +116,11 @@ app.post('/addnewjob', async (req, res)=>{
     }
 })
 
+app.get('/getuserjob', async(req,res)=>{
+    const useremail = req.session.useremail;
+    const jobs = await JobModel.find({useremail : useremail}).exec();
+    res.status(200).json({jobs : jobs, success : true})
+})
 
 
 app.listen(port, () => {

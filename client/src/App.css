@@ -378,4 +378,41 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center;
 }
 
+.user-page-indivisual-job{
+  min-height: 50px;
+  margin: 10px;
+  background-color: rgb(3, 34, 3);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+.user-page-indivisual-job:hover{
+  cursor: pointer;
+  background-color: rgb(83, 142, 83);
+  color: black;
+}
+
+.indivisual-job-inside-div{
+  min-height: 80%;
+  width: 100%;
+  display: flex;
+  padding-right: 10px;
+  padding-left: 10px;
+  justify-content: center;
+}
+
+.job-title{
+  width: 60%;
+
+}
+
+.job-date{
+  width: 20%;
+}
+
+.job-status{
+  color: rgb(81, 81, 235);
+  font-size: 20px;
+}

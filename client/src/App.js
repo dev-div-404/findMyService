@@ -8,6 +8,7 @@ import UserLogInPage from './Pages/UserLogInPage';
 import UserSignUpPage from './Pages/UserSignUpPage';
 import UserPage from './Pages/UserPage';
 import PostNewPage from './Pages/PostNewPage';
+import JobDetailsPage from './Pages/JobDetailsPage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/usersignup' element={<UserSignUpPage />}/>
           <Route path='/user' element={<UserPage />}/>
           <Route path='/postjob' element={<PostNewPage />}/>
+          <Route path="/user/jobs/:id" element={<JobDetailsPage />} />
 
         </Routes>
       </BrowserRouter>

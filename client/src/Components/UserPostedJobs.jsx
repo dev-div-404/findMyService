@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const UserPostedJobs = (props) => { 
 
   const navigate = new useNavigate();
 
+  axios.useCredentials = true;
+
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(()=>{
+    axios.get(`${process.env.REACT_APP_SERVER_URI}/getuserjob`).then(res =>{
+        if(!res.data.success){
+          alert('could not fetch data');
+        }else{
+          setJobs(res.data.jobs);
+        }
+    }).catch(err => console.log(err));
+  },[])
+
   const postNewJobHandler = () =>{
       navigate('/postjob');
+  }
+
+  const redirectToJobPage = (jobid) =>{
+      console.log(jobid)
+      navigate(`./jobs/${jobid}`)
   }
 
   return (
@@ -22,28 +42,31 @@ const UserPostedJobs = (props) => {
 
         <div id='userpage-joblist-container'>
           <div id='userpage-job-list'>
-              <div  className='userpage-indivisual-task'>
-                job 1
-              </div>
-              <div className='userpage-indivisual-task'>
-                job 2
-              </div><div  className='userpage-indivisual-task'>
-                job 1
-              </div>
-              <div className='userpage-indivisual-task'>
-                job 2
-              </div><div  className='userpage-indivisual-task'>
-                job 1
-              </div>
-              <div className='userpage-indivisual-task'>
-                job 2
-              </div><div  className='userpage-indivisual-task'>
-                job 1
-              </div>
-              <div className='userpage-indivisual-task'>
-                job 2
-              </div>
-
+              {
+                jobs.length === 0 ?
+                  <div> Nothing to show </div>
+                : <div >
+                      {
+                        jobs.map(job =>(
+                          <div key={job._id} className='user-page-indivisual-job' onClick={() => redirectToJobPage(job._id)} >
+                              <div className='indivisual-job-inside-div'>
+                                 <div className='job-title'>
+                                    {job.jobtitle}
+                                 </div>
+                                 <div className='job-date'>
+                                    {job.deadline}  
+                                 </div>
+                                 <div className='job-status'>
+                                  {
+                                    job.active === true ? '⌛' : '✅'
+                                  }
+                                 </div>
+                              </div>
+                          </div>
+                        ))
+                      }
+                  </div>
+              }
           </div>
         </div>
     </div>
