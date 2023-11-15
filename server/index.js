@@ -149,7 +149,13 @@ app.get('/getprof', (req,res)=>{
 
 app.get('/userlogout', (req,res)=>{
     console.log(req.session.username + ' logging out')
-    req.session.destroy();
+    req.session.useremail = null;
+    res.status(200).json({msg : 'logged out'})
+})
+
+app.get('/proflogout', (req,res)=>{
+    console.log(req.session.profname + ' logging out')
+    req.session.profemail = null;
     res.status(200).json({msg : 'logged out'})
 })
 
@@ -173,6 +179,19 @@ app.get('/getuserjob', async(req,res)=>{
     const useremail = req.session.useremail;
     const jobs = await JobModel.find({useremail : useremail}).exec();
     res.status(200).json({jobs : jobs, success : true})
+})
+
+
+app.get('/getnearbyjobs', async(req,res)=>{
+    if(req.session.profemail){
+        const useremail = req.session.profemail;
+        const user = await ProfModel.findOne({email : useremail});
+        const zipcode = user.zip;
+        const jobs = await JobModel.find({zip : zipcode, active : true, jobtype : user.jobtype}).exec();
+        res.status(200).json({jobs : jobs, success : true})
+    }else{
+        res.status(200).json({success : false})
+    }
 })
 
 app.post('/getjobdetails', async (req, res)=>{

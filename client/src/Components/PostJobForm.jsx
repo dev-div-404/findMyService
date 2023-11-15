@@ -52,13 +52,13 @@ const PostJobForm = () => {
     axios.post(`${process.env.REACT_APP_SERVER_URI}/addnewjob`, info).then(res =>{
         if(res.data.created){
           alert('new job created');
-          navigate('/user');
+          // navigate('/user');
         }else{
           alert('error creating job');
         }
     }).catch(err => console.log(err));
 
-    clearInfo();
+    // clearInfo();
   }
 
   const clickCancelButtonHandler = () =>{
