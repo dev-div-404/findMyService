@@ -19,7 +19,6 @@ const UserPage = () => {
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
         if(!res.data.loggedin){
-            alert('need to log in first');
             navigate('/userlogin');
         }else{
           setUserName(res.data.username);

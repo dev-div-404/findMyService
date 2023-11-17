@@ -20,10 +20,6 @@ const ProfNearByJobs = (props) => {
     }).catch(err => console.log(err));
   },[])
 
-  const postNewJobHandler = () =>{
-      navigate('/postjob');
-  }
-
   const redirectToJobPage = (jobid) =>{
       navigate(`./jobs/${jobid}`)
   }
@@ -32,11 +28,8 @@ const ProfNearByJobs = (props) => {
     <div className='user-posted-jobs-main-div'>
         <div className='user-posted-jobs-header'>
             <div className='user-posted-jobs-title-text'>
-              These are posted jobs
+              These are Near by jobs
             </div>
-            <button onClick={postNewJobHandler} id='add-job-btn-01'>
-              Post New Job
-            </button>
         </div>
 
         <div id='userpage-joblist-container'>

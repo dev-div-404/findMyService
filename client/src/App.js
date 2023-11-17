@@ -12,6 +12,7 @@ import JobDetailsPage from './Pages/JobDetailsPage'
 import ProfLogInPage from './Pages/ProfLogInPage';
 import ProfSignUpPage from './Pages/ProfSignUpPage';
 import ProfessionalPage from './Pages/ProfessionalPage';
+import ProfJobDetailsPage from './Pages/ProfJobDetailsPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/user' element={<UserPage />}/>
           <Route path='/postjob' element={<PostNewPage />}/>
           <Route path="/user/jobs/:id" element={<JobDetailsPage />} />
+          <Route path="/prof/jobs/:id" element={<ProfJobDetailsPage />} />
           <Route path="/proflogin" element={<ProfLogInPage />} />
           <Route path="/profsignup" element={<ProfSignUpPage />} />
           <Route path="/prof" element={<ProfessionalPage />} />

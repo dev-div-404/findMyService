@@ -13,7 +13,7 @@ const UserPostedJobs = (props) => {
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_SERVER_URI}/getuserjob`).then(res =>{
         if(!res.data.success){
-          alert('could not fetch data');
+          // alert('could not fetch data');
         }else{
           setJobs(res.data.jobs);
         }

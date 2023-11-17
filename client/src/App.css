@@ -492,3 +492,52 @@ input[type=number]::-webkit-outer-spin-button {
   color: rgb(120, 228, 120);
   padding-right: 20px;
 }
+
+#offer-header{
+    font-size: 40px;
+    margin-bottom: 50px;
+    margin-top: 70px;
+}
+
+.prof-offer-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#offer-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#offer-form *{
+  text-align: center;
+  margin-top: 30px;
+  width: 270px;
+}
+
+#offer-form textarea{
+  height: 50px;
+}
+
+#offer-form input{
+  height: 30px;
+}
+
+#offer-form button{
+  background-color: rgb(106, 196, 106);
+  width: 100px;
+  height: 40px;
+  border: 1px white solid;
+}
+
+#offer-form button:hover{
+  cursor: pointer;
+  background-color: rgb(9, 74, 9);
+  color: white;
+}
+
+#offer-form button:active{
+    color: black;
+}

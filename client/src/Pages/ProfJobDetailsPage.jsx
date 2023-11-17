@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const JobDetailsPage = () => {
+const ProfJobDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   axios.useCredentials = true;
@@ -20,23 +20,36 @@ const JobDetailsPage = () => {
     active : true
   });
 
+  const [offer, setOffer] = useState({
+    profcost : '',
+    profmsg : ''
+  });
+
   useEffect(()=>{
-    axios.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetails`,{jobid : id}).then(res =>{
+    axios.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetailsprof`,{jobid : id}).then(res =>{
       if(res.data.validid){
         console.log(res.data.info);
         setInfo(res.data.info);
       }else{
-        navigate('/user')
+        alert('invalid id');
+        navigate('/prof')
       }
     }).catch(err => console.log(err));
   },[])
 
-  const closeJobHandler = () =>{
-      axios.post(`${process.env.REACT_APP_SERVER_URI}/closeJob`,{jobid : id}).then(res=>{
-          if(res.data.status){
-            navigate('/user');
-          }
-      }).catch(err => console.log(err));
+  const offerChangeHandler = (event) =>{
+    setOffer({ ...offer, [event.target.name]: event.target.value });
+  }
+
+  const offerButtoonClickHandler = (e) =>{
+    e.preventDefault();
+    axios.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id}).then(res =>{
+        alert(res.data.msg);
+        if(res.data.success)
+        {
+            navigate('/prof');
+        }
+    }).catch(err => console.log(err));
   }
 
   return (
@@ -45,9 +58,9 @@ const JobDetailsPage = () => {
             <div id='job-details-title-div'>
                 <h3>{info.jobtitle}</h3>
                 {
-                  info.active ? <button onClick={closeJobHandler}>
-                                  close
-                                </button>
+                  info.active ? <div id='close-text'>
+                                    Open
+                                </div>
                               : <div id='close-text'>
                                   closed
                                 </div>
@@ -96,11 +109,16 @@ const JobDetailsPage = () => {
             </div>
         </div>
 
-        <div id='job-details-notification-div'>
-            offers
+        <div id='job-details-notification-div' className='prof-offer-container'>
+            <div id='offer-header'>Make an Offer</div>
+            <form id='offer-form'>
+                <input type='number' placeholder='Cost' name='profcost' value={offer.profcost} onChange={offerChangeHandler}/>
+                <textarea placeholder='Any Message..' name='profmsg' value={offer.profmsg} onChange={offerChangeHandler}></textarea>
+                <button onClick={offerButtoonClickHandler}>Offer</button>
+            </form>
         </div>
     </div>
   );
 };
 
-export default JobDetailsPage;
+export default ProfJobDetailsPage;

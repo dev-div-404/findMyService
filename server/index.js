@@ -10,6 +10,7 @@ import connectDB from './db/connDB.js'
 import UserModel from './db/UserModel.js'
 import JobModel from './db/JobModel.js';
 import ProfModel from './db/ProfModel.js';
+import OfferModel from './db/OfferModel.js';
 
 
 
@@ -150,12 +151,14 @@ app.get('/getprof', (req,res)=>{
 app.get('/userlogout', (req,res)=>{
     console.log(req.session.username + ' logging out')
     req.session.useremail = null;
+    req.session.username = null;
     res.status(200).json({msg : 'logged out'})
 })
 
 app.get('/proflogout', (req,res)=>{
     console.log(req.session.profname + ' logging out')
     req.session.profemail = null;
+    req.session.profname = null;
     res.status(200).json({msg : 'logged out'})
 })
 
@@ -208,6 +211,34 @@ app.post('/getjobdetails', async (req, res)=>{
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+})
+
+app.post('/postoffer', async (req, res)=>{
+    try {
+        const profid = req.session.profemail;
+        OfferModel.create({...req.body, profid : profid});
+        res.status(200).json({msg : 'offfered', success : true});
+    } catch (error) {
+        console.error(error);
+        res.status(200).json({ error: 'Internal Server Error' }).json({msg : 'could not offer'});
+    }
+})
+
+
+app.post('/getjobdetailsprof', async (req, res)=>{
+    try {
+        const jobId = req.body.jobid;
+        const jobinfo = await JobModel.findOne({ _id: jobId });
+
+        if (jobinfo && req.session.profemail) {
+            res.status(200).json({ validid: true, info: jobinfo });
+        } else {
+            res.status(200).json({ validid: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 })
 
 app.post('/closeJob', async (req, res)=>{
