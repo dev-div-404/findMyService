@@ -541,3 +541,10 @@ input[type=number]::-webkit-outer-spin-button {
 #offer-form button:active{
     color: black;
 }
+
+#offers-title{
+  height: 40px;
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+}

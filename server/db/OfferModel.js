@@ -9,6 +9,10 @@ const OfferSchema = mongoose.Schema({
       type : String,
       required : true
    },
+   profname :{
+      type:String,
+      required : true,
+   },
    profmsg : {
     type : String,
     required : true
@@ -16,6 +20,10 @@ const OfferSchema = mongoose.Schema({
    profcost : {
     type : Number,
     required : true
+   },
+   useremail : {
+      type : String,
+      required : true,
    },
    accepted : {
       type : Boolean,

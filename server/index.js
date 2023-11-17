@@ -163,7 +163,6 @@ app.get('/proflogout', (req,res)=>{
 })
 
 app.post('/addnewjob', async (req, res)=>{
-    // console.log(req.body);
     if(req.session.useremail){
         await JobModel.create({
             ...req.body,
@@ -216,11 +215,22 @@ app.post('/getjobdetails', async (req, res)=>{
 app.post('/postoffer', async (req, res)=>{
     try {
         const profid = req.session.profemail;
-        OfferModel.create({...req.body, profid : profid});
+        const prof = await ProfModel.findOne({email : profid});
+        OfferModel.create({...req.body, profid : profid, profname : prof.name});
         res.status(200).json({msg : 'offfered', success : true});
     } catch (error) {
         console.error(error);
         res.status(200).json({ error: 'Internal Server Error' }).json({msg : 'could not offer'});
+    }
+})
+
+app.post('/getoffer', async (req, res)=>{
+    try {
+        const offers = await OfferModel.find({jobid : req.jobid}).exec();
+        res.status(200).json({validid : true , offers : offers});
+    } catch (error) {
+        console.error(error);
+        res.status(200).json({ error: 'Internal Server Error' }).json({validid : false,msg : 'could not offer'});
     }
 })
 
@@ -239,7 +249,6 @@ app.post('/getjobdetailsprof', async (req, res)=>{
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-    console.log(req.session)
 })
 
 app.post('/closeJob', async (req, res)=>{

@@ -19,24 +19,29 @@ const ProfJobDetailsPage = () => {
     zip : '',
     budget: '',
     phone: '',
+    useremail : '',
     active : true
   });
 
+  const [offer, setOffer] = useState({
+    profcost : '',
+    profmsg : 'Accepted'
+  });
   
   useEffect(()=>{
     axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetailsprof`,{jobid : id}).then(res =>{
       if(res.data.validid){
         setInfo(res.data.info);
+        setOffer({
+          ...offer,
+          profcost : String(res.data.info.budget),
+        })
       }else{
         navigate('/prof')
       }
     }).catch(err => console.log(err));
   },[])
   
-  const [offer, setOffer] = useState({
-    profcost : info.budget,
-    profmsg : 'Accepted'
-  });
 
   const offerChangeHandler = (event) =>{
     setOffer({ ...offer, [event.target.name]: event.target.value });
@@ -44,7 +49,7 @@ const ProfJobDetailsPage = () => {
 
   const offerButtoonClickHandler = (e) =>{
     e.preventDefault();
-    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id}).then(res =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id,useremail : info.useremail}).then(res =>{
         if(res.data.success)
         {
             navigate('/prof');

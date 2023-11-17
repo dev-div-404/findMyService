@@ -9,6 +9,8 @@ const JobDetailsPage = () => {
     withCredentials: true,
   });
 
+  const [offers, setOffers] = useState([]);
+
   const [info, setInfo] = useState({
     jobtype: '',
     jobtitle: '',
@@ -25,12 +27,21 @@ const JobDetailsPage = () => {
   useEffect(()=>{
     axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetails`,{jobid : id}).then(res =>{
       if(res.data.validid){
-        console.log(res.data.info);
         setInfo(res.data.info);
       }else{
         navigate('/user')
       }
     }).catch(err => console.log(err));
+
+
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getoffer`,{jobid : id}).then(res =>{
+      if(res.data.validid){
+        setOffers(res.data.offers);
+      }else{
+        navigate('/user')
+      }
+    }).catch(err => console.log(err));
+
   },[])
 
   const closeJobHandler = () =>{
@@ -99,7 +110,24 @@ const JobDetailsPage = () => {
         </div>
 
         <div id='job-details-notification-div'>
-            offers
+            <div id='offers-title'>offers</div>
+            <div id='userpage-joblist-container'>
+              <div id='userpage-job-list'>
+                  {
+                    offers.length === 0 ?
+                      <div> Nothing to show </div>
+                    : <div >
+                          {
+                            offers.map(offer =>(
+                              <div key={offer._id} >
+                                  
+                              </div>
+                            ))
+                          }
+                      </div>
+                  }
+              </div>
+          </div>
         </div>
     </div>
   );
