@@ -6,14 +6,16 @@ const ProfNearByJobs = (props) => {
 
   const navigate = new useNavigate();
 
-  axios.useCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+  });
 
   const [jobs, setJobs] = useState([]);
 
   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_SERVER_URI}/getnearbyjobs`).then(res =>{
+    axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getnearbyjobs`).then(res =>{
         if(!res.data.success){
-          alert('could not fetch data');
+          console.log('could not fetch data');
         }else{
           setJobs(res.data.jobs);
         }

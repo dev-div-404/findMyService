@@ -5,7 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const JobDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  axios.useCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+  });
 
   const [info, setInfo] = useState({
     jobtype: '',
@@ -21,7 +23,7 @@ const JobDetailsPage = () => {
   });
 
   useEffect(()=>{
-    axios.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetails`,{jobid : id}).then(res =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetails`,{jobid : id}).then(res =>{
       if(res.data.validid){
         console.log(res.data.info);
         setInfo(res.data.info);
@@ -32,7 +34,7 @@ const JobDetailsPage = () => {
   },[])
 
   const closeJobHandler = () =>{
-      axios.post(`${process.env.REACT_APP_SERVER_URI}/closeJob`,{jobid : id}).then(res=>{
+      axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/closeJob`,{jobid : id}).then(res=>{
           if(res.data.status){
             navigate('/user');
           }

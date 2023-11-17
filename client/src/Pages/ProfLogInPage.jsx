@@ -6,7 +6,9 @@ import axios from 'axios'
 
 const ProfLogInPage = () => {
 
-    axios.defaults.withCredentials = true;
+    const axiosInstance = axios.create({
+        withCredentials: true,
+    });
     
     const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ const ProfLogInPage = () => {
     })
 
     useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_SERVER_URI}/getprof`).then(res =>{
+        axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getprof`).then(res =>{
             if(res.data.loggedin){
                 navigate('/prof');
             }
@@ -29,9 +31,8 @@ const ProfLogInPage = () => {
 
     const btnClickHandler = (e) =>{
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_SERVER_URI}/proflogin`,info).then(res =>{
+        axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/proflogin`,info).then(res =>{
             if(res.status === 200){
-                console.log('log in successfully')
                 navigate('/prof')
             }else alert(res.data.msg);
         }).catch(err => console.log(err));

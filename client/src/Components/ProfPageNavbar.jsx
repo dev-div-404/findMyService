@@ -22,8 +22,12 @@ const ProfPageNavbar = (props) => {
         event.currentTarget.classList.add('active-opt');
     }
 
+    const axiosInstance = axios.create({
+        withCredentials: true,
+    });
+
     const logOutHandler = () =>{
-        axios.get(`${process.env.REACT_APP_SERVER_URI}/proflogout`).then(res =>{
+        axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/proflogout`).then(res =>{
             navigate('/proflogin');
         }).catch(err => console.log(err))
     }

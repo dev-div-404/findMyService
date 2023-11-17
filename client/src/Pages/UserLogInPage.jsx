@@ -6,7 +6,9 @@ import axios from 'axios'
 
 const UserLogInPage = () => {
 
-    axios.defaults.withCredentials = true;
+    const axiosInstance = axios.create({
+        withCredentials: true,
+    });
     
     const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ const UserLogInPage = () => {
     })
 
     useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
+        axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
             if(res.data.loggedin){
                 navigate('/user');
             }
@@ -29,7 +31,7 @@ const UserLogInPage = () => {
 
     const btnClickHandler = (e) =>{
         e.preventDefault();
-        axios.post(`${process.env.REACT_APP_SERVER_URI}/userlogin`,info).then(res =>{
+        axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/userlogin`,info).then(res =>{
             if(res.status === 200){
                 console.log('log in successfully')
                 navigate('/user')

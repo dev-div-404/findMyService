@@ -8,7 +8,9 @@ import Footer from './../Components/Footer'
 
 const UserPage = () => {
 
-  axios.defaults.withCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials : true
+  });
 
   const navigate = useNavigate();
 
@@ -17,7 +19,7 @@ const UserPage = () => {
   const [opt, setOpt] = useState('dashboard');
 
   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
+    axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
         if(!res.data.loggedin){
             navigate('/userlogin');
         }else{

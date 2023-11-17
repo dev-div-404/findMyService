@@ -239,6 +239,7 @@ app.post('/getjobdetailsprof', async (req, res)=>{
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+    console.log(req.session)
 })
 
 app.post('/closeJob', async (req, res)=>{

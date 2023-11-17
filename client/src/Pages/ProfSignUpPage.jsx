@@ -6,7 +6,9 @@ import axios from 'axios'
 
 const ProfSignUpPage = () => {
 
-    axios.defaults.withCredentials = true;
+    const axiosInstance = axios.create({
+        withCredentials: true,
+    });
     const navigate = useNavigate()
 
     
@@ -50,7 +52,7 @@ const ProfSignUpPage = () => {
         {
             alert('password and confirm password is not same')
         }else{
-            axios.post(`${process.env.REACT_APP_SERVER_URI}/profsignup`,info).then(res =>{
+            axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/profsignup`,info).then(res =>{
                 if(res.status === 200){
                     alert('user registered as professonal');
                     navigate('/proflogin')

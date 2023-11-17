@@ -5,7 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const ProfJobDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  axios.useCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+  });
 
   const [info, setInfo] = useState({
     jobtype: '',
@@ -20,22 +22,21 @@ const ProfJobDetailsPage = () => {
     active : true
   });
 
-  const [offer, setOffer] = useState({
-    profcost : '',
-    profmsg : ''
-  });
-
+  
   useEffect(()=>{
-    axios.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetailsprof`,{jobid : id}).then(res =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetailsprof`,{jobid : id}).then(res =>{
       if(res.data.validid){
-        console.log(res.data.info);
         setInfo(res.data.info);
       }else{
-        alert('invalid id');
         navigate('/prof')
       }
     }).catch(err => console.log(err));
   },[])
+  
+  const [offer, setOffer] = useState({
+    profcost : info.budget,
+    profmsg : 'Accepted'
+  });
 
   const offerChangeHandler = (event) =>{
     setOffer({ ...offer, [event.target.name]: event.target.value });
@@ -43,8 +44,7 @@ const ProfJobDetailsPage = () => {
 
   const offerButtoonClickHandler = (e) =>{
     e.preventDefault();
-    axios.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id}).then(res =>{
-        alert(res.data.msg);
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id}).then(res =>{
         if(res.data.success)
         {
             navigate('/prof');

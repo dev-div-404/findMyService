@@ -22,8 +22,12 @@ const UserPageNavbar = (props) => {
         event.currentTarget.classList.add('active-opt');
     }
 
+    const axiosInstance = axios.create({
+        withCredentials: true,
+    });
+
     const logOutHandler = () =>{
-        axios.get(`${process.env.REACT_APP_SERVER_URI}/userlogout`).then(res =>{
+        axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/userlogout`).then(res =>{
             navigate('/userlogin');
         }).catch(err => console.log(err))
     }

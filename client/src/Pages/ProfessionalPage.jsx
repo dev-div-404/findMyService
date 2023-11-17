@@ -8,7 +8,9 @@ import ProfDashBoard from '../Components/ProfDashBoard';
 
 const ProfessionalPage = () => {
 
-  axios.defaults.withCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+});
 
   const navigate = useNavigate();
 
@@ -17,9 +19,8 @@ const ProfessionalPage = () => {
   const [opt, setOpt] = useState('dashboard');
 
   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_SERVER_URI}/getprof`).then(res =>{
+    axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getprof`).then(res =>{
         if(!res.data.loggedin){
-            alert('need to log in first');
             navigate('/proflogin');
         }else{
           setProfName(res.data.profname);

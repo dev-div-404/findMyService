@@ -6,10 +6,12 @@ import axios from 'axios'
 const PostJobForm = () => {
 
   const navigate = useNavigate()
-  axios.userCredentials = true;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+  });
 
   useEffect(() =>{
-      axios.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
+      axiosInstance.get(`${process.env.REACT_APP_SERVER_URI}/getuser`).then(res =>{
           if(!res.data.loggedin){
             navigate('/userlogin');
           }
@@ -48,7 +50,7 @@ const PostJobForm = () => {
     event.preventDefault();
     console.log(info);
 
-    axios.post(`${process.env.REACT_APP_SERVER_URI}/addnewjob`, info).then(res =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/addnewjob`, info).then(res =>{
         if(res.data.created){
           alert('new job created');
           navigate('/user');
