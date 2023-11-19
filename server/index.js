@@ -11,6 +11,7 @@ import UserModel from './db/UserModel.js'
 import JobModel from './db/JobModel.js';
 import ProfModel from './db/ProfModel.js';
 import OfferModel from './db/OfferModel.js';
+import ProfNotificationModel from './db/ProfNotificationSchema.js';
 
 
 
@@ -169,7 +170,22 @@ app.post('/addnewjob', async (req, res)=>{
             postdate : new Date().toISOString().split('T')[0],
             active : true,
             useremail : req.session.useremail
-        }).then((result) =>{
+        }).then(async(result) =>{
+            const profs = await ProfModel.find({zip : req.body.zip , jobtype : req.body.jobtype}).exec();
+
+            const username = req.session.username;
+            const text = `A new job is posted by ${username} near you`;
+            const link = `prof/jobs/${result._id}`;
+            
+            profs.map((prof)=>{
+                let profemail = prof.email;
+                ProfNotificationModel.create({
+                    profemail : profemail,
+                    text : text,
+                    link : link,
+                });
+            })
+
             res.status(200).json({created : true});
         }).catch(err => console.log(err));
     }else{
@@ -226,11 +242,23 @@ app.post('/postoffer', async (req, res)=>{
 
 app.post('/getoffer', async (req, res)=>{
     try {
-        const offers = await OfferModel.find({jobid : req.jobid}).exec();
-        res.status(200).json({validid : true , offers : offers});
+        const acceptedOffer = await OfferModel.findOne({jobid : req.body.jobid , accepted : true});
+        const offers = await OfferModel.find({jobid : req.body.jobid}).exec();
+        res.status(200).json({validid : true , offers : offers, acceptedOffer : acceptedOffer});
     } catch (error) {
         console.error(error);
         res.status(200).json({ error: 'Internal Server Error' }).json({validid : false,msg : 'could not offer'});
+    }
+})
+
+app.post('/acceptoffer', async (req, res)=>{
+    try {
+        const offerid = req.body.offerid;
+        await OfferModel.updateOne({_id : offerid},{$set : {accepted : true}})
+        res.status(200).json({msg : 'Accepted', success : true});
+    } catch (error) {
+        console.error(error);
+        res.status(200).json({ error: 'Internal Server Error' }).json({msg : 'could not offer'});
     }
 })
 

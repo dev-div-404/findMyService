@@ -78,7 +78,7 @@ const ProfSignUpPage = () => {
                     <form className='log-in-form signup-form'>
                         <input type="text" placeholder='name' name='name' value={info.name} onChange={infoChangeHandler}/>
 
-                        <select name='jobtype' value={info.jobtype} onChange={infoChangeHandler}>
+                        <select name='jobtype' value={info.jobtype}  id='prof-job-type' onChange={infoChangeHandler}>
                             <option value={'plumber'}>Plumber</option>
                             <option value={'electrician'}>Electrician</option>
                             <option value={'acservice'}>AC Service</option>

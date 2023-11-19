@@ -24,6 +24,9 @@ const JobDetailsPage = () => {
     active : true
   });
 
+  const [acceptedOffer, setAcceptedOffer] = useState({})
+  const [accepted, setAccepted] = useState(false);
+
   useEffect(()=>{
     axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetails`,{jobid : id}).then(res =>{
       if(res.data.validid){
@@ -37,6 +40,10 @@ const JobDetailsPage = () => {
     axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getoffer`,{jobid : id}).then(res =>{
       if(res.data.validid){
         setOffers(res.data.offers);
+        if(res.data.acceptedOffer){
+            setAcceptedOffer(res.data.acceptedOffer);
+            setAccepted(true);
+        }
       }else{
         navigate('/user')
       }
@@ -50,6 +57,12 @@ const JobDetailsPage = () => {
             navigate('/user');
           }
       }).catch(err => console.log(err));
+  }
+
+  const acceptOfferHandler = (offerid) =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/acceptoffer`,{offerid : offerid}).then(res =>{
+      window.location.reload();
+    }).catch(err => console.log(err));
   }
 
   return (
@@ -109,26 +122,71 @@ const JobDetailsPage = () => {
             </div>
         </div>
 
-        <div id='job-details-notification-div'>
-            <div id='offers-title'>offers</div>
-            <div id='userpage-joblist-container'>
-              <div id='userpage-job-list'>
-                  {
-                    offers.length === 0 ?
-                      <div> Nothing to show </div>
-                    : <div >
-                          {
-                            offers.map(offer =>(
-                              <div key={offer._id} >
-                                  
-                              </div>
-                            ))
-                          }
-                      </div>
-                  }
-              </div>
+          <div id='job-details-notification-div'>
+              <div id='offers-title'>offers</div>
+              <div id='userpage-joblist-container'>
+                <div id='userpage-job-list'>
+                    {
+                      offers.length === 0 ?
+                        <div> Nothing to show </div>
+
+                      : accepted ?
+                            <div>
+                              <div key={acceptedOffer._id} className='offer-div-container'>
+                                  <div className='offer-div-title-bar'>
+                                      <div className='offer-profname'>
+                                          From : {acceptedOffer.profname}
+                                      </div>
+                                      <div className='offer-profprice'>
+                                          Offer : {acceptedOffer.profcost}
+                                      </div>
+                                      <div className='offer-button-container'>
+                                          
+                                      </div>
+                                  </div>
+                                  <div className='offer-body'>
+                                      <div className='offer-prof-phone'>
+                                          contact : 1234567890
+                                      </div>
+                                      <div className='offer-prof-msg'>
+                                          Note : {acceptedOffer.profmsg}
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                      :<div >
+                            {
+                              offers.map(offer =>(
+                                <div key={offer._id} className='offer-div-container'>
+                                    <div className='offer-div-title-bar'>
+                                        <div className='offer-profname'>
+                                            From : {offer.profname}
+                                        </div>
+                                        <div className='offer-profprice'>
+                                            Offer : {offer.profcost}
+                                        </div>
+                                        <div className='offer-button-container'>
+                                            <button className='offer-accept-btn' onClick={() => acceptOfferHandler(offer._id)}>
+                                               Accept
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className='offer-body'>
+                                        <div className='offer-prof-phone'>
+                                            contact : 1234567890
+                                        </div>
+                                        <div className='offer-prof-msg'>
+                                            Note : {offer.profmsg}
+                                        </div>
+                                    </div>
+                                </div>
+                              ))
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
           </div>
-        </div>
     </div>
   );
 };
