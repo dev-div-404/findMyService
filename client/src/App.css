@@ -221,20 +221,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashboard-posted-job-div{
-  width: 60%;
+  width: 55%;
   height: 100%;
 }
 
 .dashboard-notification-div{
-  width: 40%;
+  width: 45%;
   height: 100%;
-  border: rgb(0, 102, 255) 1px solid;
 }
 
 .user-posted-jobs-main-div{
   height: 100%;
   width: 100%;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   border-radius: 5px;
   background-color: rgb(2, 63, 63);
 }
@@ -387,6 +386,8 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .user-page-indivisual-job:hover{
@@ -624,4 +625,77 @@ input[type=number]::-webkit-outer-spin-button {
 .offer-accept-btn:active{
   cursor: pointer;
   background-color: rgb(189, 216, 189);
+}
+
+
+.offer-accepted-dib-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.offer-accepted-container{
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(93, 227, 144);
+}
+
+.offer-accepted-container *{
+  margin: 20px;
+}
+
+.offer-accepted-greetings{
+  font-size: 25px;
+}
+
+.offer-accepted-note{
+  width: 400px;
+  height: 150px;
+  text-align: center;
+  color: rgb(139, 240, 240);
+  overflow-y: auto;
+  word-wrap: break-word; 
+  white-space: normal;
+  padding: 5px;
+  border: 3px solid rgb(1, 80, 18);
+  background-color: black;
+  line-height: 1.5;
+}
+
+.offer-accepted-happy{
+  font-family: 'Courier New', Courier, monospace;
+  font-style: italic;
+  font-size: 30px;
+}
+
+.offer-accepted-from-other{
+  background-color: rgb(9, 78, 9);
+  height: 200px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.offer-accepted-from-other div{
+    margin: 10px;
+}
+
+.offer-from-others{
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.sorry-message{
+  font-size: 50px;
+  color: yellow;
+  text-shadow: -1px 0 #ffd60a, 0 1px #ffd60a;
+  font-style: italic;
 }

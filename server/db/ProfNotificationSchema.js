@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ProfNotificationSchema = mongoose.Schema({
+const NotificationSchema = mongoose.Schema({
     profemail : {
         type: String,
         required : true,
@@ -12,7 +12,11 @@ const ProfNotificationSchema = mongoose.Schema({
     link : {
         type : String,
         required : true,
+    },
+    date : {
+        type : String,
+        required : true,
     }
 })
 
-export default mongoose.model('profNotification',ProfNotificationSchema);
+export default mongoose.model('notification',NotificationSchema);

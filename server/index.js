@@ -11,7 +11,7 @@ import UserModel from './db/UserModel.js'
 import JobModel from './db/JobModel.js';
 import ProfModel from './db/ProfModel.js';
 import OfferModel from './db/OfferModel.js';
-import ProfNotificationModel from './db/ProfNotificationSchema.js';
+import NotificationModel from './db/ProfNotificationSchema.js';
 
 
 
@@ -175,14 +175,15 @@ app.post('/addnewjob', async (req, res)=>{
 
             const username = req.session.username;
             const text = `A new job is posted by ${username} near you`;
-            const link = `prof/jobs/${result._id}`;
+            const link = `${result._id}`;
             
             profs.map((prof)=>{
                 let profemail = prof.email;
-                ProfNotificationModel.create({
+                NotificationModel.create({
                     profemail : profemail,
                     text : text,
                     link : link,
+                    date : new Date().toISOString()
                 });
             })
 
@@ -212,6 +213,28 @@ app.get('/getnearbyjobs', async(req,res)=>{
     }
 })
 
+
+app.get('/getprofnotification', async(req,res)=>{
+    if(req.session.profemail){
+        const profemail = req.session.profemail;
+        const notifications = await NotificationModel.find({profemail : profemail}).sort({date : -1}).exec();
+        res.status(200).json({success : true, notifications : notifications});
+    }else{
+        res.status(200).json({success : false});
+    }
+})
+
+app.get('/getusernotification', async(req,res)=>{
+    if(req.session.useremail){
+        const profemail = req.session.useremail;
+        const notifications = await NotificationModel.find({profemail : profemail}).sort({date : -1}).exec();
+        res.status(200).json({success : true, notifications : notifications});
+    }else{
+        res.status(200).json({success : false});
+    }
+})
+
+
 app.post('/getjobdetails', async (req, res)=>{
     try {
     const jobId = req.body.jobid;
@@ -233,12 +256,48 @@ app.post('/postoffer', async (req, res)=>{
         const profid = req.session.profemail;
         const prof = await ProfModel.findOne({email : profid});
         OfferModel.create({...req.body, profid : profid, profname : prof.name});
+
+        //send notification
+
+        const email = req.body.useremail;
+        const text = `You Got A new Offer for ${req.body.jobtitle}. Click to see !`
+        const link = `${req.body.jobid}`
+
+        NotificationModel.create({
+            profemail : email,
+            text : text,
+            link : link,
+            date : new Date().toISOString()
+        });
+
         res.status(200).json({msg : 'offfered', success : true});
     } catch (error) {
         console.error(error);
         res.status(200).json({ error: 'Internal Server Error' }).json({msg : 'could not offer'});
     }
 })
+
+
+app.post('/getolderoffer', async (req, res)=>{
+    try {
+        const profid = req.session.profemail;
+        const offer = await OfferModel.findOne({profid : profid, jobid : req.body.jobid , accepted : true});
+        const otheroffer = await OfferModel.findOne({jobid : req.body.jobid , accepted : true});
+        if(offer){
+            res.status(200).json({exists : true, offer : offer});
+        }else if(otheroffer){
+            console.log('hello')
+            res.status(200).json({exists : false, otherofferstatus : true});
+        }else{
+            res.status(200).json({exists : false});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(200).json({ error: 'Internal Server Error' }).json({msg : 'could not process'});
+    }
+})
+
+
 
 app.post('/getoffer', async (req, res)=>{
     try {
@@ -255,6 +314,19 @@ app.post('/acceptoffer', async (req, res)=>{
     try {
         const offerid = req.body.offerid;
         await OfferModel.updateOne({_id : offerid},{$set : {accepted : true}})
+
+        //sending notification
+        const offer = await OfferModel.findOne({_id : offerid});
+        const profid = offer.profid;
+        const text = `Your offer got accepted !! click to check`;
+        const link = `${offer.jobid}`;
+        NotificationModel.create({
+            profemail : profid,
+            text : text,
+            link : link,
+            date : new Date().toISOString()
+        });
+        
         res.status(200).json({msg : 'Accepted', success : true});
     } catch (error) {
         console.error(error);

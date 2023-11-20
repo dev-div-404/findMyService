@@ -20,7 +20,7 @@ const ProfSignUpPage = () => {
         password: '',
         cpassword: '',
         zip: '',
-        jobtype : ''
+        jobtype : 'plumber'
         
     })
 

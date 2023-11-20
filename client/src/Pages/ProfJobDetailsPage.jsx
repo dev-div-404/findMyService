@@ -27,6 +27,15 @@ const ProfJobDetailsPage = () => {
     profcost : '',
     profmsg : 'Accepted'
   });
+
+  const [myoffer, setMyOffer] = useState({
+    profcost : '',
+    profmsg : 'Accepted'
+  });
+
+  const [exist, setExist] = useState(false);
+  const [otherOfferStatus, setOtherOfferStatus] = useState(false);
+  
   
   useEffect(()=>{
     axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getjobdetailsprof`,{jobid : id}).then(res =>{
@@ -40,6 +49,21 @@ const ProfJobDetailsPage = () => {
         navigate('/prof')
       }
     }).catch(err => console.log(err));
+
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/getolderoffer`,{jobid : id}).then(res =>{
+      if(res.data.exists){
+        console.log(res.data.offer)
+        setExist(true);
+        setMyOffer(res.data.offer);
+      }else{
+        setExist(false);
+        console.log(res.data.otherofferstatus);
+        if(res.data.otherofferstatus)
+        {
+            setOtherOfferStatus(true);
+        }
+      }
+    }).catch(err => console.log(err));
   },[])
   
 
@@ -49,7 +73,7 @@ const ProfJobDetailsPage = () => {
 
   const offerButtoonClickHandler = (e) =>{
     e.preventDefault();
-    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id,useremail : info.useremail}).then(res =>{
+    axiosInstance.post(`${process.env.REACT_APP_SERVER_URI}/postoffer`,{...offer, jobid : id,useremail : info.useremail, jobtitle : info.jobtitle}).then(res =>{
         if(res.data.success)
         {
             navigate('/prof');
@@ -115,12 +139,45 @@ const ProfJobDetailsPage = () => {
         </div>
 
         <div id='job-details-notification-div' className='prof-offer-container'>
-            <div id='offer-header'>Make an Offer</div>
-            <form id='offer-form'>
-                <input type='number' placeholder='Cost' name='profcost' value={offer.profcost} onChange={offerChangeHandler}/>
-                <textarea placeholder='Any Message..' name='profmsg' value={offer.profmsg} onChange={offerChangeHandler}></textarea>
-                <button onClick={offerButtoonClickHandler}>Offer</button>
-            </form>
+            {
+
+             !(exist || otherOfferStatus) ? <div>
+                                              <div id='offer-header'>Make New Offer</div>
+                                              <form id='offer-form'>
+                                                  <input type='number' placeholder='Cost' name='profcost' value={offer.profcost} onChange={offerChangeHandler}/>
+                                                  <textarea placeholder='Any Message..' name='profmsg' value={offer.profmsg} onChange={offerChangeHandler}></textarea>
+                                                  <button onClick={offerButtoonClickHandler}>Offer</button>
+                                              </form>
+                                            </div>
+                    : otherOfferStatus ? <div className='offer-accepted-from-other'>
+                                              <div className='offer-from-others'>
+                                                  Offer from others has been Accepted
+                                              </div>
+                                              <div className='sorry-message offer-from-others'>
+                                                🫡 SORRY !! 🫡
+                                              </div>
+                                          </div>
+                    
+                    : <div className='offer-accepted-dib-container'>
+                          <div className='offer-accepted-container'>
+                            <div className='offer-accepted-greetings'>
+                            🎉 Your offer has been accepted by the client! 🎉
+                            </div>
+                            <div>
+                              Your Price : {myoffer.profcost}
+                            </div>
+                            <div>
+                              :: Your Note ::
+                            </div>
+                            <div className='offer-accepted-note'>
+                                {myoffer.profmsg}
+                            </div>
+                            <div className='offer-accepted-happy'>
+                                Happy Work !!
+                            </div>
+                          </div>
+                      </div>
+            }
         </div>
     </div>
   );

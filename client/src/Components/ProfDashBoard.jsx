@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfNearByJobs from './ProfNearByJobs';
+import ProfNotification from './ProfNotification';
 
 const ProfDashBoard = (props) => {
 
@@ -12,7 +13,7 @@ const ProfDashBoard = (props) => {
             <ProfNearByJobs email = {userEmail}/>
         </div>
         <div className='dashboard-notification-div'>
-            these are notifications
+            <ProfNotification email = {userEmail}/>
         </div>
     </div>
   )

@@ -1,5 +1,6 @@
 import React from 'react'
 import UserPostedJobs from './UserPostedJobs'
+import UserNotification from './UserNotification';
 
 const UserDashBoard = (props) => {
 
@@ -12,7 +13,7 @@ const UserDashBoard = (props) => {
             <UserPostedJobs email = {userEmail}/>
         </div>
         <div className='dashboard-notification-div'>
-            these are notifications
+          <UserNotification email = {userEmail}/>
         </div>
     </div>
   )
