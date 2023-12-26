@@ -9,6 +9,7 @@ const ProfSignUpPage = () => {
     const axiosInstance = axios.create({
         withCredentials: true,
     });
+    
     const navigate = useNavigate()
 
     

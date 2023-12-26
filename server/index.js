@@ -286,7 +286,6 @@ app.post('/getolderoffer', async (req, res)=>{
         if(offer){
             res.status(200).json({exists : true, offer : offer});
         }else if(otheroffer){
-            console.log('hello')
             res.status(200).json({exists : false, otherofferstatus : true});
         }else{
             res.status(200).json({exists : false});
